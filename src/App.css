@@ -1,16 +1,70 @@
+:root {
+  --filter-button: #E1E4EA;
+  --primary-color: #E54065;
+  --border-color: #CFD2DC;
+  --background: #F4F5F9;
+  --text-color: #636363;
+  --read-background: #F2F2F2;
+}
+
+* {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  background-color: var(--background);
+  color: var(--text-color);
+}
+
+.filter-nav>ul {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
+
+.filter-nav>ul>li {
+  padding: 0 10px;
+  margin: 0 5px;
+  border-radius: 10px;
+  background-color: var(--filter-button);
+  /* opacity: 0.8; */
+  cursor: pointer;
+}
+
 .App {
   /* text-align: center; */
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   display: flex;
 }
 
-.email-list{
+.email-list {
   border: red 1px solid;
-  flex:1;
+  flex: 2;
+  padding: 20px;
 }
 
-.email-body{
-  border: red 1px solid;
+.email-card {
+  display: flex;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 10px 0;
+  margin: 25px 0;
 }
 
+.avatar {
+  height: 50px;
+  aspect-ratio: 1;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  flex: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 15px;
 
+  color: white;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.email-body {
+  border: red 1px solid;
+  flex: 3;
+}

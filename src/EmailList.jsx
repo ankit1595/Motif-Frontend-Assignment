@@ -1,9 +1,16 @@
-import React from 'react'
+import React from "react";
+import EmailCard from "./EmailCard";
 
 const EmailList = () => {
   return (
-    <div className='email-list'>EmailList</div>
-  )
-}
+    <main className="email-list">
+      EmailList
+      <EmailCard />
+      <EmailCard />
+      <EmailCard />
+      <EmailCard />
+    </main>
+  );
+};
 
-export default EmailList
+export default EmailList;
