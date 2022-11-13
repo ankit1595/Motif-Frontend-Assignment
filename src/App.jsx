@@ -4,6 +4,7 @@ import EmailBody from "./EmailBody";
 import EmailList from "./EmailList";
 
 function App() {
+  const [emailDataSource, setEmailDataSource] = useState([]);
   const [emailListData, setEmailListData] = useState([]);
   const [emailBodyData, setEmailBodyData] = useState("");
   const [isEmailOpen, setIsEmailOpen] = useState(false);
@@ -14,14 +15,16 @@ function App() {
   }, []);
 
   function fetchEmailList() {
-    setFilterTab("all");
     fetch("https://6366339879b0914b75cba9c2.mockapi.io/api/email")
       .then((response) => response.json())
-      .then((data) =>
+      .then((data) => {
         setEmailListData(
           data.map((item) => ({ ...item, read: false, favorite: false }))
-        )
-      )
+        );
+        setEmailDataSource(
+          data.map((item) => ({ ...item, read: false, favorite: false }))
+        );
+      })
       .catch((err) => console.error(err));
   }
 
@@ -33,6 +36,14 @@ function App() {
         setEmailBodyData({ ...data, ...emailData });
         setIsEmailOpen(true);
         setEmailListData((prevState) =>
+          prevState.map((item) => {
+            if (item.id === id) {
+              return { ...item, read: true };
+            }
+            return item;
+          })
+        );
+        setEmailDataSource((prevState) =>
           prevState.map((item) => {
             if (item.id === id) {
               return { ...item, read: true };
@@ -52,13 +63,22 @@ function App() {
 
   function markAsFavorite(id) {
     console.log("favourite marked, ", id);
-    const emailData = [...emailListData];
-    emailData.map((item, index) => {
-      if (item.id === id) {
-        emailData[index] = { ...item, favorite: !item.favorite };
-      }
-    });
-    setEmailListData(emailData);
+    setEmailListData((prevData) =>
+      prevData.map((item) => {
+        if (item.id === id) {
+          return { ...item, favorite: !item.favorite };
+        }
+        return item;
+      })
+    );
+    setEmailDataSource((prevData) =>
+      prevData.map((item) => {
+        if (item.id === id) {
+          return { ...item, favorite: !item.favorite };
+        }
+        return item;
+      })
+    );
 
     setEmailBodyData((prevState) => ({
       ...prevState,
@@ -67,24 +87,24 @@ function App() {
   }
 
   function filterUnreadList() {
-    const emailData = [...emailListData];
-    const unreadEmails = emailData.filter((item) => !item.read);
+    // const emailData = [...emailListData];
+    const unreadEmails = emailDataSource.filter((item) => !item.read);
     setEmailListData(unreadEmails);
     setIsEmailOpen(false);
     setFilterTab("unread");
   }
 
   function filterReadList() {
-    const emailData = [...emailListData];
-    const readEmails = emailData.filter((item) => item.read);
+    // const emailData = [...emailListData];
+    const readEmails = emailDataSource.filter((item) => item.read);
     setEmailListData(readEmails);
     setIsEmailOpen(false);
     setFilterTab("read");
   }
 
   function filterFavoriteList() {
-    const emailData = [...emailListData];
-    const favouriteEmails = emailData.filter((item) => item.favorite);
+    // const emailData = [...emailListData];
+    const favouriteEmails = emailDataSource.filter((item) => item.favorite);
     setEmailListData(favouriteEmails);
     setIsEmailOpen(false);
     setFilterTab("favorites");
@@ -97,7 +117,10 @@ function App() {
           Filter By:
           <li
             className={filterTab === "all" ? "active" : ""}
-            onClick={fetchEmailList}>
+            onClick={() => {
+              setEmailListData(emailDataSource);
+              setFilterTab("all");
+            }}>
             All Emails
           </li>
           <li
