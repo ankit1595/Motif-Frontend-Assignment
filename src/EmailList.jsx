@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import EmailCard from "./EmailCard";
 
-const EmailList = () => {
+const EmailList = (props) => {
+  const { emailListData, handleOpenEmail } = props;
+
   return (
     <main className="email-list">
-      <EmailCard />
-      <EmailCard />
-      <EmailCard />
-      <EmailCard />
+      {emailListData.map((item) => (
+        <EmailCard
+          key={item.id}
+          data={item}
+          handleOpenEmail={handleOpenEmail}
+        />
+      ))}
     </main>
   );
 };

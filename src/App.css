@@ -44,7 +44,7 @@ body {
 }
 
 .email-card {
-  height: 140px;
+  height: min-content;
   /* width: 515px; */
   display: flex;
   border: 1px solid var(--border-color);
@@ -52,6 +52,11 @@ body {
   padding: 10px 0;
   margin-bottom: 25px;
 
+}
+
+.email-card:hover{
+  background-color: pink;
+  cursor: pointer;
 }
 
 .email-open {
@@ -106,4 +111,5 @@ body {
   border: 0;
   border-radius: 10px;
   color: white;
+  cursor: pointer;
 }
