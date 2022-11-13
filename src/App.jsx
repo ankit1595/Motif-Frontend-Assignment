@@ -6,9 +6,15 @@ import EmailList from "./EmailList";
 function App() {
   const [emailListData, setEmailListData] = useState([]);
   const [emailBodyData, setEmailBodyData] = useState("");
-  const [toggleEmailOpen, setToggleEmailOpen] = useState(false);
+  const [isEmailOpen, setIsEmailOpen] = useState(false);
+  const [filterTab, setFilterTab] = useState("all");
 
   useEffect(() => {
+    fetchEmailList();
+  }, []);
+
+  function fetchEmailList() {
+    setFilterTab("all");
     fetch("https://6366339879b0914b75cba9c2.mockapi.io/api/email")
       .then((response) => response.json())
       .then((data) =>
@@ -17,23 +23,30 @@ function App() {
         )
       )
       .catch((err) => console.error(err));
-  }, []);
+  }
 
   function fetchEmailBody(id, emailData) {
-    setToggleEmailOpen(false);
+    // setIsEmailOpen(false);
     fetch(`https://6366339879b0914b75cba9c2.mockapi.io/api/email/${id}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setEmailBodyData({ ...data, ...emailData });
-        setToggleEmailOpen(true);
+        setIsEmailOpen(true);
+        setEmailListData((prevState) =>
+          prevState.map((item) => {
+            if (item.id === id) {
+              return { ...item, read: true };
+            }
+            return item;
+          })
+        );
       })
       .catch((err) => console.error(err));
   }
 
   function handleOpenEmail(id, emailData) {
     console.log("clicked id:", id, emailData);
-    // setToggleEmailOpen((prevState) => !prevState);
+    // setIsEmailOpen(true);
     fetchEmailBody(id, emailData);
   }
 
@@ -41,22 +54,67 @@ function App() {
     console.log("favourite marked, ", id);
     const emailData = [...emailListData];
     emailData.map((item, index) => {
-      if(item.id === id){
-        emailData[index] = {...item, favorite: !item.favorite}
+      if (item.id === id) {
+        emailData[index] = { ...item, favorite: !item.favorite };
       }
-    })
+    });
     setEmailListData(emailData);
 
-    setEmailBodyData(prevState => ({...prevState, favorite: !prevState.favorite}))
+    setEmailBodyData((prevState) => ({
+      ...prevState,
+      favorite: !prevState.favorite,
+    }));
   }
+
+  function filterUnreadList() {
+    const emailData = [...emailListData];
+    const unreadEmails = emailData.filter((item) => !item.read);
+    setEmailListData(unreadEmails);
+    setIsEmailOpen(false);
+    setFilterTab("unread");
+  }
+
+  function filterReadList() {
+    const emailData = [...emailListData];
+    const readEmails = emailData.filter((item) => item.read);
+    setEmailListData(readEmails);
+    setIsEmailOpen(false);
+    setFilterTab("read");
+  }
+
+  function filterFavoriteList() {
+    const emailData = [...emailListData];
+    const favouriteEmails = emailData.filter((item) => item.favorite);
+    setEmailListData(favouriteEmails);
+    setIsEmailOpen(false);
+    setFilterTab("favorites");
+  }
+
   return (
     <>
       <nav className="filter-nav">
         <ul>
           Filter By:
-          <li>Unread</li>
-          <li>Read</li>
-          <li>Favorites</li>
+          <li
+            className={filterTab === "all" ? "active" : ""}
+            onClick={fetchEmailList}>
+            All Emails
+          </li>
+          <li
+            className={filterTab === "unread" ? "active" : ""}
+            onClick={filterUnreadList}>
+            Unread
+          </li>
+          <li
+            className={filterTab === "read" ? "active" : ""}
+            onClick={filterReadList}>
+            Read
+          </li>
+          <li
+            className={filterTab === "favorites" ? "active" : ""}
+            onClick={filterFavoriteList}>
+            Favorites
+          </li>
         </ul>
       </nav>
       <div className="App">
@@ -64,7 +122,7 @@ function App() {
           emailListData={emailListData}
           handleOpenEmail={handleOpenEmail}
         />
-        {toggleEmailOpen && (
+        {isEmailOpen && (
           <EmailBody
             emailData={emailBodyData}
             markAsFavorite={markAsFavorite}

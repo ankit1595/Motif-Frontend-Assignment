@@ -27,8 +27,13 @@ body {
   padding: 0 10px;
   margin: 0 5px;
   border-radius: 10px;
-  background-color: var(--filter-button);
+
   cursor: pointer;
+}
+
+.active{
+  background-color: var(--filter-button);
+  border: 1px solid var(--border-color);
 }
 
 .App {
@@ -54,15 +59,9 @@ body {
 
 }
 
-.email-card:hover{
-  background-color: pink;
+.email-card:hover {
+  background-color: light-pink;
   cursor: pointer;
-}
-
-.email-open {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
 }
 
 .avatar {
@@ -110,6 +109,9 @@ body {
   cursor: pointer;
 }
 
-.read{
+.read {
   background-color: var(--read-background);
+  /* white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden; */
 }
