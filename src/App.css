@@ -5,6 +5,7 @@
   --background: #F4F5F9;
   --text-color: #636363;
   --read-background: #F2F2F2;
+  --hover-color: #ffc0cb5c;
 }
 
 body {
@@ -60,7 +61,7 @@ body {
 }
 
 .email-card:hover {
-  background-color: light-pink;
+  background-color: var(--hover-color);
   cursor: pointer;
 }
 
