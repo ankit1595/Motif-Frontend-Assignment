@@ -90,10 +90,6 @@ body {
   border-radius: 10px;
 }
 
-.email-body-content {
-  flex: auto;
-}
-
 .email-body-topbar {
   display: flex;
   justify-content: space-between;
@@ -112,4 +108,8 @@ body {
   border-radius: 10px;
   color: white;
   cursor: pointer;
+}
+
+.read{
+  background-color: var(--read-background);
 }
