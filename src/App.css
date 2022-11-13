@@ -102,6 +102,7 @@ body {
 
 .favorite-btn {
   height: min-content;
+  min-width: fit-content;
   background-color: var(--primary-color);
   padding: 5px 10px;
   border: 0;
