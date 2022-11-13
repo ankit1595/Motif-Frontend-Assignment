@@ -15,7 +15,7 @@ function App() {
       </nav>
       <div className="App">
         <EmailList />
-        {/* <EmailBody /> */}
+        <EmailBody />
       </div>
     </>
   );

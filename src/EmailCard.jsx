@@ -12,10 +12,12 @@ const EmailCard = () => {
           Subject: <b>Lorem Ipsum</b>
         </div>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt,
-          dicta ex ipsa mollitia sint dignissimos placeat vero sed animi sit,
-          tenetur perferendis saepe nihil, tempore aut ut soluta vitae eum.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. 
         </p>
+        <small>
+          <time dateTime="2020-02-26 10:20">26/02/2020 10:20am</time>
+          <b style={{ color: "#E54065", marginLeft: "20px" }}>Favorite</b>
+        </small>
       </div>
     </div>
   );

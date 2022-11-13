@@ -4,7 +4,6 @@ import EmailCard from "./EmailCard";
 const EmailList = () => {
   return (
     <main className="email-list">
-      EmailList
       <EmailCard />
       <EmailCard />
       <EmailCard />
