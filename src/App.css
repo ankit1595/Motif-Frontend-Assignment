@@ -17,21 +17,25 @@ body {
   padding: 10px 50px;
 }
 
+.filter-nav {
+  font-weight: 500;
+}
+
 .filter-nav>ul {
   display: flex;
   list-style-type: none;
   padding: 0;
   margin: 20px 0;
+  gap: 10px;
 }
 
 .filter-nav>ul>li {
   padding: 0 10px;
-  margin: 0 5px;
   border-radius: 10px;
   cursor: pointer;
 }
 
-.active{
+.active {
   background-color: var(--filter-button);
   border: 1px solid var(--border-color);
 }
@@ -89,7 +93,7 @@ body {
   justify-content: space-between;
 }
 
-.email-body-topbar h1 {
+.email-body-topbar h1, h2 {
   margin-top: 0;
   font-weight: 600;
 }
@@ -107,7 +111,8 @@ body {
 
 .read {
   background-color: var(--read-background);
-  /* white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden; */
+}
+
+b {
+  font-weight: 600;
 }

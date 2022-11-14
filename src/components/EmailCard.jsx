@@ -2,6 +2,7 @@ import React from "react";
 
 const EmailCard = (props) => {
   const { from_email, from_name, id, short_description, subject, read, favorite } = props.data;
+  
   return (
     <div className={`email-card ${read ? "read": ""}`} onClick={() => props.handleOpenEmail(id, props.data)}>
       <div className="avatar">{from_name[0]}</div>

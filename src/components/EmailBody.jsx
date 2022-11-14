@@ -8,7 +8,7 @@ const EmailBody = (props) => {
       <div className="avatar">{from_name[0]}</div>
       <div>
         <div className="email-body-topbar">
-          <h1>{subject}</h1>
+          <h2>{subject}</h2>
           <button
             className="favorite-btn"
             onClick={() => props.markAsFavorite(id)}>
