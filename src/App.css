@@ -17,6 +17,11 @@ body {
   padding: 10px 50px;
 }
 
+.App {
+  display: flex;
+  gap: 25px;
+}
+
 .filter-nav {
   font-weight: 500;
 }
@@ -38,11 +43,6 @@ body {
 .active {
   background-color: var(--filter-button);
   border: 1px solid var(--border-color);
-}
-
-.App {
-  display: flex;
-  gap: 20px;
 }
 
 .email-list {
@@ -93,7 +93,8 @@ body {
   justify-content: space-between;
 }
 
-.email-body-topbar h1, h2 {
+.email-body-topbar h1,
+h2 {
   margin-top: 0;
   font-weight: 600;
 }
