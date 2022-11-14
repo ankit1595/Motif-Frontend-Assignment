@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import EmailBody from "./EmailBody";
-import EmailList from "./EmailList";
+import EmailBody from "./components/EmailBody";
+import EmailList from "./components/EmailList";
 
 function App() {
   const [emailDataSource, setEmailDataSource] = useState([]);
@@ -29,7 +29,6 @@ function App() {
   }
 
   function fetchEmailBody(id, emailData) {
-    // setIsEmailOpen(false);
     fetch(`https://6366339879b0914b75cba9c2.mockapi.io/api/email/${id}`)
       .then((response) => response.json())
       .then((data) => {
@@ -56,13 +55,10 @@ function App() {
   }
 
   function handleOpenEmail(id, emailData) {
-    console.log("clicked id:", id, emailData);
-    // setIsEmailOpen(true);
     fetchEmailBody(id, emailData);
   }
 
   function markAsFavorite(id) {
-    console.log("favourite marked, ", id);
     setEmailListData((prevData) =>
       prevData.map((item) => {
         if (item.id === id) {
@@ -86,42 +82,37 @@ function App() {
     }));
   }
 
-  function filterUnreadList() {
-    // const emailData = [...emailListData];
-    const unreadEmails = emailDataSource.filter((item) => !item.read);
-    setEmailListData(unreadEmails);
+  function filterEmails(type) {
+    let emailList = emailDataSource;
+    if (type === "unread") {
+      emailList = emailDataSource.filter((item) => !item.read);
+    } else if (type === "read") {
+      emailList = emailDataSource.filter((item) => item.read);
+    } else if (type === "favorites") {
+      emailList = emailDataSource.filter((item) => item.favorite);
+    } else {
+      emailList = emailDataSource;
+    }
+    setFilterTab(type);
+    setEmailListData(emailList);
     setIsEmailOpen(false);
-    setFilterTab("unread");
   }
 
-  function filterReadList() {
-    // const emailData = [...emailListData];
-    const readEmails = emailDataSource.filter((item) => item.read);
-    setEmailListData(readEmails);
-    setIsEmailOpen(false);
-    setFilterTab("read");
+  function getDate() {
+    let date = new Date();
+    const day = date.toLocaleDateString().split("/")[1];
+    const mmyyyy = date.toLocaleDateString("en-US", {
+      month: "numeric",
+      year: "numeric",
+    });
+    const time = date.toLocaleString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
+    const dateFormat = day + "/" + mmyyyy + " " + time;
+    return dateFormat;
   }
-
-  function filterFavoriteList() {
-    // const emailData = [...emailListData];
-    const favouriteEmails = emailDataSource.filter((item) => item.favorite);
-    setEmailListData(favouriteEmails);
-    setIsEmailOpen(false);
-    setFilterTab("favorites");
-  }
-
-  let date = new Date();
-  const day = date.toLocaleDateString().split("/")[1];
-  const mmyyyy = date.toLocaleDateString("en-US", {
-    month: "numeric",
-    year: "numeric",
-  });
-  const time = date.toLocaleString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  });
-  const dateFormat = day + "/" + mmyyyy + " " + time;
 
   return (
     <>
@@ -130,25 +121,22 @@ function App() {
           Filter By:
           <li
             className={filterTab === "all" ? "active" : ""}
-            onClick={() => {
-              setEmailListData(emailDataSource);
-              setFilterTab("all");
-            }}>
+            onClick={() => filterEmails("all")}>
             All Emails
           </li>
           <li
             className={filterTab === "unread" ? "active" : ""}
-            onClick={filterUnreadList}>
+            onClick={() => filterEmails("unread")}>
             Unread
           </li>
           <li
             className={filterTab === "read" ? "active" : ""}
-            onClick={filterReadList}>
+            onClick={() => filterEmails("read")}>
             Read
           </li>
           <li
             className={filterTab === "favorites" ? "active" : ""}
-            onClick={filterFavoriteList}>
+            onClick={() => filterEmails("favorites")}>
             Favorites
           </li>
         </ul>
@@ -157,13 +145,13 @@ function App() {
         <EmailList
           emailListData={emailListData}
           handleOpenEmail={handleOpenEmail}
-          date={dateFormat}
+          date={getDate()}
         />
         {isEmailOpen && (
           <EmailBody
             emailData={emailBodyData}
             markAsFavorite={markAsFavorite}
-            date={dateFormat}
+            date={getDate()}
           />
         )}
       </div>
