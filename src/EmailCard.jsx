@@ -17,7 +17,7 @@ const EmailCard = (props) => {
         </div>
         <p>{short_description}</p>
         <small>
-          <time dateTime="2020-02-26 10:20">26/02/2020 10:20am</time>
+          <time dateTime={props.date}>{props.date}</time>
           {favorite && <b style={{ color: "#E54065", marginLeft: "20px" }}>Favorite</b>}
         </small>
       </div>

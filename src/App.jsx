@@ -110,6 +110,19 @@ function App() {
     setFilterTab("favorites");
   }
 
+  let date = new Date();
+  const day = date.toLocaleDateString().split("/")[1];
+  const mmyyyy = date.toLocaleDateString("en-US", {
+    month: "numeric",
+    year: "numeric",
+  });
+  const time = date.toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
+  const dateFormat = day + "/" + mmyyyy + " " + time;
+
   return (
     <>
       <nav className="filter-nav">
@@ -144,11 +157,13 @@ function App() {
         <EmailList
           emailListData={emailListData}
           handleOpenEmail={handleOpenEmail}
+          date={dateFormat}
         />
         {isEmailOpen && (
           <EmailBody
             emailData={emailBodyData}
             markAsFavorite={markAsFavorite}
+            date={dateFormat}
           />
         )}
       </div>
